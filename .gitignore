@@ -1,1 +1,4 @@
-/Manifest.toml
+.directory
+.CondaPkg
+*.*~
+Manifest.toml

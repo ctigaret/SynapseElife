@@ -5,6 +5,7 @@ version = "0.0.1"
 
 [deps]
 Catalyst = "479239e8-5488-4da2-87a7-35f2df7eef83"
+ColorSchemes = "35d6a980-a343-548e-a6ea-1d62b119f2f4"
 DataFrames = "a93c6f00-e57d-5684-b7b6-d8193f3e46c0"
 Distributions = "31c24e10-a181-5473-b8eb-7969acd0382f"
 DocStringExtensions = "ffbed154-4ef7-542d-bbb7-c09d3a79fcae"
@@ -38,9 +39,9 @@ StatsBase = "0.33"
 julia = "^1.8"
 
 [extras]
+DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 LSODA = "7f56f5a3-f504-529b-bc02-0b1fe5e64312"
 Sundials = "c3572dad-4567-51f8-b174-8c6c989267f4"
-DifferentialEquations = "0c46a032-eb83-5123-abaf-570d42b7fbaa"
 Test = "8dfed614-e22c-5e08-85e1-65c5234f0b40"
 
 [targets]
