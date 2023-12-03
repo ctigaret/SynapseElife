@@ -4,6 +4,11 @@ using Revise, SynapseElife,
 	PiecewiseDeterministicMarkovProcesses,
 	ColorSchemes, Parameters, Sundials
 
+# NOTE: 2023-12-03 11:42:39 CMT
+# for saving figures to SVG as they are made, see NOTE: 2023-12-03 12:08:48 CMT
+# and further down
+using Dates
+
 ############# Initials ##################################################
 data_protocol = dataProtocol("TigaretMellor16")
 
@@ -11,8 +16,10 @@ colorss = ColorSchemes.coolwarm
 	# pyplot()
 	l = @layout [a{.5w} b{.5w}]
 	Plots.plot(windowsize=(0.9*1100*2/3,0.9*250),layout=l,grid=false)
-	plot!(w=0,SynapseParams().LTP_region,color="red",alpha=.1)
-	plot!(w=0,SynapseParams().LTD_region,color="blue",alpha=.1); plot!(grid=false)
+	# NOTE: 2023-12-03 12:08:05 CMT
+	# qualify plot! so that I can use it from my package
+	Plots.plot!(w=0,SynapseParams().LTP_region,color="red",alpha=.1)
+	Plots.plot!(w=0,SynapseParams().LTD_region,color="blue",alpha=.1); Plots.plot!(grid=false)
 
 for k in 2:8
 	pls = data_protocol[!,:pulse][k]
@@ -81,8 +88,12 @@ for k in 2:8
 
 		@info "Plotting..."
 		args = (color = get(colorss, k/8), w = 2, grid= false)
-		plot!(CaN,  CaMKII; subplot = 1, ylabel="CaMKII (μM)", xlabel="CaN (μM)", label = "", ylim=[0,32], xlim=[0,11.5], args...) |> display
-		plot!(tt/1e3, [out[:lt]][1:end][1][1:end,3]-[out[:lt]][1:end][1][1:end,2]; subplot = 2,ylabel="weight change (%)", xlabel="Time (s)", label = "$(data_protocol[k,:protocol])", ylim = [-80,90], args...) |> display
+		Plots.plot!(CaN,  CaMKII; subplot = 1, ylabel="CaMKII (μM)", xlabel="CaN (μM)", label = "", ylim=[0,32], xlim=[0,11.5], args...) |> display
+		Plots.plot!(tt/1e3, [out[:lt]][1:end][1][1:end,3]-[out[:lt]][1:end][1][1:end,2]; subplot = 2,ylabel="weight change (%)", xlabel="Time (s)", label = "$(data_protocol[k,:protocol])", ylim = [-80,90], args...) |> display
 end
 
-plot!(subplot = 1,legend = :none) |> display
+Plots.plot!(subplot = 1,legend = :none) |> display
+
+# NOTE: 2023-12-03 12:08:48 CMT
+savefig("Figure3_$(Dates.now()).svg")
+Plots.plot!() # display figure after writing to file

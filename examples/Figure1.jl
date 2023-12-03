@@ -4,6 +4,11 @@ using Revise, SynapseElife,
 	PiecewiseDeterministicMarkovProcesses,
 	ColorSchemes, Sundials
 
+# NOTE: 2023-12-03 11:42:39 CMT
+# for saving figures to SVG as they are made, see NOTE: 2023-12-03 11:41:15 CMT
+# and further down
+using Dates
+
 ############# Initials ##################################################
 data_protocol = dataProtocol("TigaretMellor16")
 ############################  Simulation 1 - panel b ################################
@@ -78,6 +83,7 @@ XD = result.XD
 colorss = ColorSchemes.viridis
 limits_d(x) = (minimum(x) ;maximum(x))
 
+############################  Simulation 1 - panel b ################################ NOTE: 2023-12-03 11:52:40 CMT
 gr()
 	l = @layout [[a{.5w} b{.3w}]; [c{.5w}  d{.3w}]; [e{.5w} f{.3w}]; [g{.5w} h{.3w}]]
 	Plots.plot(windowsize=(1.5*700 * .6,350*1.5),layout=l,grid=false)
@@ -85,43 +91,46 @@ gr()
 	#AMPAr
 	lim=[(start-15*.02),(start+15*.28)]
 	val = XD[14,:] .+ XD[15,:] .+ XD[16,:]
-	plot!(tt,val,xlabel=" ",label="",ylabel="AMPAr",w=2.5,subplot=1,alpha=1,color=get(colorss, 0.) ,linetype=:steppost,layout=l,axis=false,grid=false,xlim=[start-20 ,start .+ 250],xticks=(collect(500:100:700),collect(0:100:200))
+	Plots.plot!(tt,val,xlabel=" ",label="",ylabel="AMPAr",w=2.5,subplot=1,alpha=1,color=get(colorss, 0.) ,linetype=:steppost,layout=l,axis=false,grid=false,xlim=[start-20 ,start .+ 250],xticks=(collect(500:100:700),collect(0:100:200))
 	,yticks=(collect(0:20:80)))
-	plot!(tt,val,xlabel="time (ms)",label="",ylabel="AMPAr",w=2.5,subplot=2,alpha=1,color=get(colorss, 0.) ,linetype=:steppost,layout=l,xlim=lim,
+	Plots.plot!(tt,val,xlabel="time (ms)",label="",ylabel="AMPAr",w=2.5,subplot=2,alpha=1,color=get(colorss, 0.) ,linetype=:steppost,layout=l,xlim=lim,
 	xticks=(collect(500:1:504),collect(0:1:4)),
 	yticks=(collect(0:20:80)))
 
 	#VGCC
 	lim = [(start+11.2),(start+20)]
 	val = XD[28,:]
-	plot!(tt,XD[32,:],xlabel="",label="T-type",ylabel="",w=2.5,subplot=3,alpha=1,color=get(colorss, .5) ,linetype=:steppost,layout=l)
-	plot!(tt,XD[28,:],xlabel="",label="R-type",ylabel="",w=2.5,subplot=3,alpha=1,color=get(colorss, 1.) ,linetype=:steppost,layout=l,axis=false,grid=false)
-	plot!(tt,XD[34,:] .+ XD[35,:],xlabel="",label="L-type",ylabel="VGCC",w=2.5,subplot=3,alpha=1,color=get(colorss, .0) ,linetype=:steppost,layout=l,
+	Plots.plot!(tt,XD[32,:],xlabel="",label="T-type",ylabel="",w=2.5,subplot=3,alpha=1,color=get(colorss, .5) ,linetype=:steppost,layout=l)
+	Plots.plot!(tt,XD[28,:],xlabel="",label="R-type",ylabel="",w=2.5,subplot=3,alpha=1,color=get(colorss, 1.) ,linetype=:steppost,layout=l,axis=false,grid=false)
+	Plots.plot!(tt,XD[34,:] .+ XD[35,:],xlabel="",label="L-type",ylabel="VGCC",w=2.5,subplot=3,alpha=1,color=get(colorss, .0) ,linetype=:steppost,layout=l,
 	xlim=[start-20 ,start .+ 250],xticks=(collect(500:100:700),collect(0:100:200)))
 
-	plot!(tt,XD[28,:],xlabel="",label="",ylabel="",w=2.5,subplot=4,alpha=1,color=get(colorss, 1.) ,linetype=:steppost,layout=l)
-	plot!(tt,XD[32,:],xlabel="",label="",ylabel="",w=2.5,subplot=4,alpha=1,color=get(colorss, .5) ,linetype=:steppost,layout=l)
-	plot!(tt,XD[34,:] .+ XD[35,:],xlabel="time (ms)",label="",ylabel="VGCC",w=2.5,subplot=4,alpha=1,color=get(colorss, .0) ,linetype=:steppost,layout=l,xlim=lim,
+	Plots.plot!(tt,XD[28,:],xlabel="",label="",ylabel="",w=2.5,subplot=4,alpha=1,color=get(colorss, 1.) ,linetype=:steppost,layout=l)
+	Plots.plot!(tt,XD[32,:],xlabel="",label="",ylabel="",w=2.5,subplot=4,alpha=1,color=get(colorss, .5) ,linetype=:steppost,layout=l)
+	Plots.plot!(tt,XD[34,:] .+ XD[35,:],xlabel="time (ms)",label="",ylabel="VGCC",w=2.5,subplot=4,alpha=1,color=get(colorss, .0) ,linetype=:steppost,layout=l,xlim=lim,
 	xticks=(collect(512:2:520),collect(0:2:8)))
 
 	#GABAr
 	lim = [(start-100*.015),(start+100*.3)]
 	val = XD[49,:] .+ XD[50,:]
-	plot!(tt,val,xlabel="",label="",ylabel="GABAr",w=2.5,subplot=5,alpha=1,color=get(colorss, 0.5) ,linetype=:steppost,layout=l,axis=false,grid=false,
+	Plots.plot!(tt,val,xlabel="",label="",ylabel="GABAr",w=2.5,subplot=5,alpha=1,color=get(colorss, 0.5) ,linetype=:steppost,layout=l,axis=false,grid=false,
 	xlim=[start-20 ,start .+ 250],xticks=(collect(500:100:700),collect(0:100:200)))
-	plot!(tt,val,xlabel="time (ms)",label="",ylabel="GABAr",w=2.5,subplot=6,alpha=1,color=get(colorss, 0.5) ,linetype=:steppost,layout=l,
+	Plots.plot!(tt,val,xlabel="time (ms)",label="",ylabel="GABAr",w=2.5,subplot=6,alpha=1,color=get(colorss, 0.5) ,linetype=:steppost,layout=l,
 	xlim=lim,
 	xticks=(collect(500:10:530),collect(0:10:30)),yticks=(collect(0:10:30)))
 
 	#NMDAr
 	lim = [(start-550*.06 ),(start+550 )]
 	val = XD[22,:] .+ XD[23,:]
-	plot!(tt,val,xlabel="",label="GluN2A",ylabel="",w=2.5,subplot=7,alpha=1,color=get(colorss, 0.25) ,linetype=:steppost,layout=l,yaxis=false,grid=false,xlim=[start-20,start .+ 250])
-	plot!(tt,val,xlabel="time (ms)",label="",ylabel="NMDAr",w=2.5,subplot=8,alpha=1,color=get(colorss, 0.25) ,linetype=:steppost,layout=l,xlim=[500-5,600],
+	Plots.plot!(tt,val,xlabel="",label="GluN2A",ylabel="",w=2.5,subplot=7,alpha=1,color=get(colorss, 0.25) ,linetype=:steppost,layout=l,yaxis=false,grid=false,xlim=[start-20,start .+ 250])
+	Plots.plot!(tt,val,xlabel="time (ms)",label="",ylabel="NMDAr",w=2.5,subplot=8,alpha=1,color=get(colorss, 0.25) ,linetype=:steppost,layout=l,xlim=[500-5,600],
 	xticks=(collect(500:25:600),collect(0:25:100)),yticks=(collect(0:2:8)))
 	val = XD[44,:] .+ XD[45,:]
-	plot!(tt,val,xlabel="time (ms)",label="GluN2B",ylabel="NMDAr",w=2.5,subplot=7,alpha=1,color=get(colorss, 0.75) ,linetype=:steppost,layout=l,
+	Plots.plot!(tt,val,xlabel="time (ms)",label="GluN2B",ylabel="NMDAr",w=2.5,subplot=7,alpha=1,color=get(colorss, 0.75) ,linetype=:steppost,layout=l,
 	xticks=(collect(500:100:700),collect(0:100:200)),yticks=(collect(0:2:8))) |> display
+	
+	# NOTE: 2023-12-03 11:41:15 CMT
+	savefig("Figure1_b_$(Dates.now()).svg")
 
 ############################  Simulation 1 - panel c and d ################################
 gr()
@@ -189,8 +198,8 @@ gr()
 			out=SynapseElife.get_names(result.XC, result.XD)
 
 		args = (color = :black, label = "", xlabel="time (ms)", xlim = [470, 570],alpha=.3,w=2,xticks=(collect(500:25:550),collect(0:25:50)))
-		plot!(tt, out[:Vsp]; subplot = 1, ylabel = "Voltage (mv)", args...)
-		plot!(tt,  out[:Ca];  subplot = 2, ylabel = "Ca2+ (μM)", args...) |> display
+		Plots.plot!(tt, out[:Vsp]; subplot = 1, ylabel = "Voltage (mv)", args...)
+		Plots.plot!(tt,  out[:Ca];  subplot = 2, ylabel = "Ca2+ (μM)", args...) |> display
 	end
 
 	k = 8
@@ -232,8 +241,8 @@ gr()
 	is_glu_release, Docked, Reserve, t_stp, glu_release_times, bap_by_epsp_times = stp(param_synapse.t_end, pre_synapse, events_times, is_pre_or_post_event, _plot = false, algo = CHV(CVODE_BDF()))
 	@show "number of releases $(sum(is_glu_release))"
 
-	plot!(t_stp/1000, Docked; label = "docked",subplot = 3,xlabel="time(s)", ylabel = "Vesicles",linetype=:steppost ,w=2)
-	plot!(t_stp/1000, Reserve; label = "reserve",subplot = 3,xlabel="time(s)", ylabel = "Vesicles",linetype=:steppost ,w=2)
+	Plots.plot!(t_stp/1000, Docked; label = "docked",subplot = 3,xlabel="time(s)", ylabel = "Vesicles",linetype=:steppost ,w=2)
+	Plots.plot!(t_stp/1000, Reserve; label = "reserve",subplot = 3,xlabel="time(s)", ylabel = "Vesicles",linetype=:steppost ,w=2)
 	scatter!(glu_release_times/1000, 31 .* ones(length(glu_release_times)); label = "releases",subplot = 3,xlabel="time (s)", ylabel = "Vesicles",w=2)
 
 	result = @time evolveSynapse(
@@ -253,9 +262,11 @@ gr()
 	out=SynapseElife.get_names(result.XC, result.XD)
 
 	args = (color = :black, label = "", xlabel="time (s)", w=2 )
-	plot!(tt/1000, out[:λ]; subplot = 4, ylabel = "BaP efficiency ", args...) |>display
+	Plots.plot!(tt/1000, out[:λ]; subplot = 4, ylabel = "BaP efficiency ", args...) |>display
 
-############################  Simulation 1 - panel c and d ################################
+	# NOTE: 2023-12-03 11:41:15 CMT
+	savefig("Figure1_c_d_$(Dates.now()).svg")
+############################  Simulation 1 - panel e ################################
 
 gr()
 	l = @layout [a ; b ; c]
@@ -325,6 +336,10 @@ gr()
 
 
 		args = (color = :black, label = "", xlabel="time (s)" ,alpha=1,w=2)
-		plot!(tt/1000, CaM; subplot = 1, ylabel = "CaM (μM)", args...)
-		plot!(tt/1000,  CaMKII;  subplot = 2, ylabel = "CaMKII (μM)", args...)
-		plot!(tt/1000,  CaN;  subplot = 3, ylabel = "CaN (μM)", args...)  |> display
+		Plots.plot!(tt/1000, CaM; subplot = 1, ylabel = "CaM (μM)", args...)
+		Plots.plot!(tt/1000,  CaMKII;  subplot = 2, ylabel = "CaMKII (μM)", args...)
+		Plots.plot!(tt/1000,  CaN;  subplot = 3, ylabel = "CaN (μM)", args...)  |> display
+		
+	# NOTE: 2023-12-03 11:41:15 CMT
+	savefig("Figure1_e_$(Dates.now()).svg")
+	Plots.plot!() # displays the last plot after writing to file

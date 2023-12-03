@@ -4,6 +4,11 @@ using Revise, SynapseElife,
 	PiecewiseDeterministicMarkovProcesses,
 	ColorSchemes, Parameters, Sundials
 
+# NOTE: 2023-12-03 11:42:39 CMT
+# for saving figures to SVG as they are made, see NOTE: 2023-12-03 12:02:44 CMT
+# and further down
+using Dates
+
 ############# Initials ##################################################
 
 
@@ -87,11 +92,19 @@ function makeFigure2(;detailed::Bool = true)
 
 			@info "Plotting..."
 			args = (color = get(colorss, colorrr), w = 2)
-			plot!(tt/1000, CaMKII; subplot = counter,xlabel="time (s)", ylabel = "enzymes (μM)",ylim=[0,32], label = "$(data_protocol[k,:protocol])", args...)
-			plot!(tt/1000,  CaN;  subplot = counter,label = "",linestyle = :dash,args...)
-			plot!(CaN,  CaMKII;  subplot = counter+1,ylabel="CaMKII (μM)", xlabel="CaN (μM)", label = "$(data_protocol[k,:protocol])",ylim=[0,32],xlim=[0,11.5], args...) |> display
+			# NOTE: 2023-12-03 11:58:00 CMT
+			# so that I can use this fforom my own package, is better to qualify
+			# plot! as Plots.plot!
+			Plots.plot!(tt/1000, CaMKII; subplot = counter,xlabel="time (s)", ylabel = "enzymes (μM)",ylim=[0,32], label = "$(data_protocol[k,:protocol])", args...)
+			Plots.plot!(tt/1000,  CaN;  subplot = counter,label = "",linestyle = :dash,args...)
+			Plots.plot!(CaN,  CaMKII;  subplot = counter+1,ylabel="CaMKII (μM)", xlabel="CaN (μM)", label = "$(data_protocol[k,:protocol])",ylim=[0,32],xlim=[0,11.5], args...) |> display
 			colorrr=1-colorrr #invert color
 		end
 	end
 end
+
 @time makeFigure2(detailed = true)
+
+# NOTE: 2023-12-03 12:02:44 CMT
+savefig("Figure2_e_f_h_i_k_l_$(Dates.now()).svg")
+Plots.plot!() # display the last plot after writing to file
