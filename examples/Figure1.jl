@@ -131,6 +131,7 @@ gr()
 	
 	# NOTE: 2023-12-03 11:41:15 CMT
 	savefig("Figure1_b_$(Dates.now()).svg")
+	Plots.plot!()# re-display the GKS QtTerm
 
 ############################  Simulation 1 - panel c and d ################################
 gr()
@@ -243,7 +244,7 @@ gr()
 
 	Plots.plot!(t_stp/1000, Docked; label = "docked",subplot = 3,xlabel="time(s)", ylabel = "Vesicles",linetype=:steppost ,w=2)
 	Plots.plot!(t_stp/1000, Reserve; label = "reserve",subplot = 3,xlabel="time(s)", ylabel = "Vesicles",linetype=:steppost ,w=2)
-	scatter!(glu_release_times/1000, 31 .* ones(length(glu_release_times)); label = "releases",subplot = 3,xlabel="time (s)", ylabel = "Vesicles",w=2)
+	Plots.scatter!(glu_release_times/1000, 31 .* ones(length(glu_release_times)); label = "releases",subplot = 3,xlabel="time (s)", ylabel = "Vesicles",w=2)
 
 	result = @time evolveSynapse(
 			xc0,
@@ -266,6 +267,8 @@ gr()
 
 	# NOTE: 2023-12-03 11:41:15 CMT
 	savefig("Figure1_c_d_$(Dates.now()).svg")
+	Plots.plot!()# re-display the GKS QtTerm
+	
 ############################  Simulation 1 - panel e ################################
 
 gr()
@@ -342,4 +345,4 @@ gr()
 		
 	# NOTE: 2023-12-03 11:41:15 CMT
 	savefig("Figure1_e_$(Dates.now()).svg")
-	Plots.plot!() # displays the last plot after writing to file
+	Plots.plot!()# re-display the GKS QtTerm
